@@ -2,6 +2,7 @@ import Head from 'next/head';
 import showdown from 'showdown';
 import { ReactElement, useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
+import { Console } from 'console';
 
 const user = 'madanlimbu';
 const repo = 'gitbook';
@@ -44,6 +45,22 @@ function IndexPage({ name, summary }): ReactElement {
     }, []);
 
     useEffect(() => {
+        // const menuText = show.makeHtml(summary);
+        // const dom = new DOMParser().parseFromString(menuText, 'text/html');
+        // console.log(dom.querySelector('body>ul'));
+        // const menus = dom.querySelector('body>ul');
+        // console.log(menus);
+        // function allDescendants (node, callback) {
+        //     for (var i = 0; i < node.children.length; i++) {
+        //       var child = node.children[i];
+        //       allDescendants(child, callback);
+        //       callback(child);
+        //     }
+        // }
+        // allDescendants(menus, (c) => {
+        //     console.log(c);
+        // });
+
         setMenu(show.makeHtml(summary))
     }, [summary]);
 
@@ -59,8 +76,12 @@ function IndexPage({ name, summary }): ReactElement {
         <base href={baseUrl} />
         <script data-ad-client="ca-pub-7420131458491934" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </Head>
-            <div dangerouslySetInnerHTML={{ __html: menu}} />
-            <div dangerouslySetInnerHTML={{ __html: page}} />
+        <header className="header">
+            <nav className="nav" dangerouslySetInnerHTML={{ __html: menu}} />
+        </header>
+        <div className="main">
+            <div className="content" dangerouslySetInnerHTML={{ __html: page}} />
+        </div>
         </>
         );
 }
