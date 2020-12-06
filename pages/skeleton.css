@@ -37,7 +37,8 @@ nav {
 
 aside {
     padding: 20px;
-    background-color: #936;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 100%;
 }
 
 footer {

@@ -17,7 +17,7 @@ const routes: RouteProps = {
         },
         {
             title: 'Web',
-            path: '/learn/web-stuff/README',
+            // path: '/learn/web-stuff/README',
             routes: [
                 {
                     title: 'Web Api',

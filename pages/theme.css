@@ -17,3 +17,12 @@ code {
 .container-full {
     display: flex;
 }
+
+.content {
+    overflow-wrap: break-word;
+}
+
+aside {
+    z-index: 1;
+    padding: 0px;
+}
