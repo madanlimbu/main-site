@@ -1,0 +1,19 @@
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+pre,
+code {
+    overflow-x: scroll;
+}
+
+@media (min-width: 768px) {
+    aside {
+        min-height: 100vh;
+    }
+}
+
+.container-full {
+    display: flex;
+}

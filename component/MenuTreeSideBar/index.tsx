@@ -1,0 +1,53 @@
+import { Router, useRouter } from "next/router";
+import { ReactElement, useEffect, useState } from "react";
+import { GenerateMenuTree, RouteProps } from "../Menu";
+
+export function MenuTreeSideBar({ routes }: RouteProps): ReactElement {
+    const router = useRouter();
+
+    const leaf = (route: RouteProps): ReactElement => {
+         return <li key={route.title} onClick={(e) => {
+             e.preventDefault();
+             e.stopPropagation();
+             router.push(route.path);
+         }}>
+             <a href={route.path} >
+                <span className="tree_label" >{route.title}</span>
+             </a>
+            </li>;
+    }
+
+    const branch = (route: RouteProps): ReactElement => {
+        const router = useRouter();
+        const path = router.asPath;
+        const [isHome, setIsHome] = useState(false);
+
+        useEffect(() => {
+            setIsHome(router.asPath === '/');
+        }, [path]);
+        
+        const [checked, setChecked] = useState(false);
+        console.log(`ishome`, isHome);
+        return (
+            <li key={route.title} onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setChecked(!checked)
+            }} >
+                <input type="checkbox" checked={isHome ? isHome : checked} id={route.title} onChange={(e) => {
+                    e.preventDefault();
+                }} />
+                <label className="tree_label" htmlFor={route.title}>{route.title}</label>
+                <ul>
+                    <GenerateMenuTree routes={route.routes} branch={branch} leaf={leaf}/>
+                </ul>
+            </li>
+            );
+    }
+
+    return(
+        <ul className="tree">
+            <GenerateMenuTree routes={routes} branch={branch} leaf={leaf} />
+        </ul>
+    )
+}

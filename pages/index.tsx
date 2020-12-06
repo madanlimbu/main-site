@@ -1,8 +1,11 @@
 import Head from 'next/head';
 import showdown from 'showdown';
-import { ReactElement, useEffect, useState } from 'react';
+import { LegacyRef, MutableRefObject, ReactElement, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router'
 import { Console } from 'console';
+import Header from '../component/Header';
+import { MenuTreeSideBar } from '../component/MenuTreeSideBar';
+import hljs from 'highlight.js';
 
 const user = 'madanlimbu';
 const repo = 'gitbook';
@@ -23,20 +26,35 @@ function IndexPage({ name, summary }): ReactElement {
     const [menu, setMenu] = useState('');
     const [isTemp, setIsTemp] = useState(false);
     const [baseUrl, setBaseUrl] = useState('');
+    const [isHome, setIsHome] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
 
     showdown.setFlavor('github');
     const show = new showdown.Converter();
 
     const router = useRouter();
-    const path = router.asPath === '/' ? '/README.md' : router.asPath;
+    const path = router.asPath;
 
     const updatePage = async (path) => {
-        const res = await fetch(pageToUrl(path));
-        const pageText = await res.text();
-        
-        const pageHtml = show.makeHtml(pageText);
-        setPage(pageHtml);
+        if (path === '/') {
+            setIsHome(true);
+        } else {
+            const res = await fetch(pageToUrl(path));
+            const pageText = await res.text();
+            
+            const pageHtml = show.makeHtml(pageText);
+            setPage(pageHtml);
+        }
     }
+    
+    useEffect(() => {
+        if (ref.current) {
+            const codeNodesList = ref.current.querySelectorAll('pre');
+            codeNodesList.forEach(node => {
+                hljs.highlightBlock(node);
+            });
+        }
+    });
 
     useEffect(() => {
         if (typeof window !== undefined) {
@@ -47,8 +65,6 @@ function IndexPage({ name, summary }): ReactElement {
                 '/learn/README.md',
                 '/random/README.md'
             ];
-            console.log(`path`, window.location.pathname)
-            console.log(`is temp ?`, tempUrlArray.includes(window.location.pathname));
             if (tempUrlArray.includes(window.location.pathname)) {
                 setIsTemp(true);
             }
@@ -56,43 +72,97 @@ function IndexPage({ name, summary }): ReactElement {
     }, []);
 
     useEffect(() => {
-        // const menuText = show.makeHtml(summary);
-        // const dom = new DOMParser().parseFromString(menuText, 'text/html');
-        // console.log(dom.querySelector('body>ul'));
-        // const menus = dom.querySelector('body>ul');
-        // console.log(menus);
-        // function allDescendants (node, callback) {
-        //     for (var i = 0; i < node.children.length; i++) {
-        //       var child = node.children[i];
-        //       allDescendants(child, callback);
-        //       callback(child);
-        //     }
-        // }
-        // allDescendants(menus, (c) => {
-        //     console.log(c);
-        // });
-
         setMenu(show.makeHtml(summary))
     }, [summary]);
 
     useEffect(() => {
         updatePage(path);
-    }, []);
+        setIsHome(path === '/');
+    }, [path]);
 
+
+
+    const routes: RoutesProps = {
+        title: 'madan',
+        routes: [
+            {
+                title: 'Home',
+                path: '/'
+            },
+            {
+                title: 'Web',
+                routes: [
+                    {
+                        title: 'Web Api',
+                        path: '/learn/web-stuff/web-api.md'
+                    },
+                    {
+                        title: 'Cookie',
+                        path: '/learn/web-stuff/cookie.md'
+                    }
+                ]
+            },
+            {
+                title: 'React',
+                path: '/learn/web-stuff/react/README.md',
+                routes: [
+                    {
+                        title: 'React Hooks',
+                        path: '/learn/web-stuff/react/hooks.md'
+                    }
+                ]
+            },
+            {
+                title: 'Drupal',
+                routes: [
+                    {
+                        title: 'Drupal 8',
+                        routes: [
+                            {
+                                title: 'Permissions',
+                                path: '/learn/drupal/drupal-8/permissions.md'
+                            },
+                            {
+                                title: 'Data system',
+                                path: '/learn/drupal/drupal-8/type-of-data-storage.md'
+                            },
+                        ]
+                    },
+                    {
+                        title: 'Drupal 7',
+                        routes: [
+                            {
+                                title: 'Custom Field Widget',
+                                path: '/learn/drupal/drupal-7/custom-field-widget.md'
+                            },
+                            {
+                                title: 'Custom Drush Command',
+                                path: '/learn/drupal/drupal-7/drush-command.md'
+                            },
+                        ]
+                    }
+                ]
+            },
+        ]
+    };
 
     return (
         <>
         <Head>
-        <meta property="og:title" content="Learn" key="title" />
-        <base href={baseUrl} />
-        <script data-ad-client="ca-pub-7420131458491934" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <meta charSet="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta property="og:title" content="Learn" key="title" />
+            <base href={baseUrl} />
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/styles/default.min.css" />            <script data-ad-client="ca-pub-7420131458491934" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </Head>
-        <header className="header">
-            <nav className="nav" dangerouslySetInnerHTML={{ __html: menu}} />
-        </header>
-        <div className="main">
-            {isTemp ? <div className="tree" dangerouslySetInnerHTML={{ __html: menu}} /> : 
-            <div className="content" dangerouslySetInnerHTML={{ __html: page}} />}
+        <div className={`container ${isHome ? `container-full` : ``}`}>
+            {/* <nav dangerouslySetInnerHTML={{ __html: menu}} /> */}
+            <aside><MenuTreeSideBar {...routes} /></aside>
+            <main>
+                {isTemp ? <div className="tree" dangerouslySetInnerHTML={{ __html: menu}} /> : 
+                <div ref={ref} className="content" dangerouslySetInnerHTML={{ __html: page}} />}
+            </main>
         </div>
         </>
         );
