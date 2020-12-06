@@ -38,6 +38,7 @@ function IndexPage({ name, summary }): ReactElement {
 
     useEffect(() => {
         if (typeof window !== undefined) {
+            // Todo: Update showdown to add slash "/" infront of hrefs.
             setBaseUrl(window.location.origin);
         }
     }, []);
