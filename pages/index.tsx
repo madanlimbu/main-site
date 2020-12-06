@@ -20,6 +20,7 @@ export async function getStaticProps() {
 function IndexPage({ name, summary }): ReactElement {
     const [page, setPage] = useState('');
     const [menu, setMenu] = useState('');
+    const [baseUrl, setBaseUrl] = useState('');
 
     showdown.setFlavor('github');
     const show = new showdown.Converter();
@@ -36,6 +37,12 @@ function IndexPage({ name, summary }): ReactElement {
     }
 
     useEffect(() => {
+        if (typeof window !== undefined) {
+            setBaseUrl(window.location.origin);
+        }
+    }, []);
+
+    useEffect(() => {
         setMenu(show.makeHtml(summary))
     }, [summary]);
 
@@ -47,8 +54,8 @@ function IndexPage({ name, summary }): ReactElement {
     return (
         <>
         <Head>
-        <meta property="og:title" content="My page title" key="title" />
-        <base href="http://localhost:3000" />
+        <meta property="og:title" content="Learn" key="title" />
+        <base href={baseUrl} />
         <script data-ad-client="ca-pub-7420131458491934" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </Head>
             <div dangerouslySetInnerHTML={{ __html: menu}} />
