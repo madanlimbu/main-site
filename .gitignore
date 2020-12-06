@@ -1,6 +1,7 @@
 node_modules/
 www/
 .next/
+docs/
 
 .DS_Store
 yarn-error.log
