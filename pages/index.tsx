@@ -6,6 +6,7 @@ import { Console } from 'console';
 import Header from '../component/Header';
 import { MenuTreeSideBar } from '../component/MenuTreeSideBar';
 import hljs from 'highlight.js';
+import { RouteProps } from '../component/Menu';
 
 const user = 'madanlimbu';
 const repo = 'gitbook';
@@ -82,7 +83,7 @@ function IndexPage({ name, summary }): ReactElement {
 
 
 
-    const routes: RoutesProps = {
+    const routes: RouteProps = {
         title: 'madan',
         routes: [
             {
