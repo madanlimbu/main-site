@@ -221,7 +221,7 @@ function IndexPage({ name, summary }): ReactElement {
         <div className={`container ${isHome ? `container-full` : ``}`}>
             {/* <nav dangerouslySetInnerHTML={{ __html: menu}} /> */}
             <aside>
-                <img class="avatar" src="https://avatars2.githubusercontent.com/u/12434457?s=460&u=d33f17b31e3dd616e415c3f928e952f8ccc3bb9b&v=4" />
+                <img className="avatar" src="https://avatars2.githubusercontent.com/u/12434457?s=460&u=d33f17b31e3dd616e415c3f928e952f8ccc3bb9b&v=4" />
                 <MenuTreeSideBar {...routes} />
             </aside>
             <main>
