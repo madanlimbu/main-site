@@ -1,20 +1,60 @@
 import Head from 'next/head';
+import showdown from 'showdown';
+import { ReactElement, useEffect, useState } from 'react';
+import { useRouter } from 'next/router'
 
-export async function getStaticProps() {
-    return { props: { name: 'madan' } }
+const user = 'madanlimbu';
+const repo = 'gitbook';
+const branch = 'master';
+const pageToUrl = (pageName: string) => {
+    return `https://raw.githubusercontent.com/${user}/${repo}/${branch}${pageName}`;
 }
 
-function IndexPage({ name }) {
+export async function getStaticProps() {
+    const summaryData = await fetch(pageToUrl('/SUMMARY.md'));
+    const summary = await summaryData.text();
+
+    return { props: { name: 'madan', summary } }
+}
+
+function IndexPage({ name, summary }): ReactElement {
+    const [page, setPage] = useState('');
+    const [menu, setMenu] = useState('');
+
+    showdown.setFlavor('github');
+    const show = new showdown.Converter();
+
+    const router = useRouter();
+    const path = router.asPath;
+
+    const updatePage = async (path) => {
+        const res = await fetch(pageToUrl(path));
+        const pageText = await res.text();
+        
+        const pageHtml = show.makeHtml(pageText);
+        setPage(pageHtml);
+    }
+
+    useEffect(() => {
+        setMenu(show.makeHtml(summary))
+    }, [summary]);
+
+    useEffect(() => {
+        updatePage(path);
+    }, [path]);
+
+
     return (
         <>
         <Head>
         <meta property="og:title" content="My page title" key="title" />
-        <title>Testing Head component</title>    
+        <base href="http://localhost:3000" />
         <script data-ad-client="ca-pub-7420131458491934" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </Head>
-        {name}
-            <div>Test home page.</div>
-        </>);
+            <div dangerouslySetInnerHTML={{ __html: menu}} />
+            <div dangerouslySetInnerHTML={{ __html: page}} />
+        </>
+        );
 }
 
-export default IndexPage
+export default IndexPage;
