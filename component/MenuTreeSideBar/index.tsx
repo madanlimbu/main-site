@@ -27,7 +27,6 @@ export function MenuTreeSideBar({ routes }: RouteProps): ReactElement {
         }, [path]);
         
         const [checked, setChecked] = useState(false);
-        console.log(`ishome`, isHome);
         return (
             <li key={route.title} onClick={(e) => {
                 e.preventDefault();
@@ -36,8 +35,25 @@ export function MenuTreeSideBar({ routes }: RouteProps): ReactElement {
             }} >
                 <input type="checkbox" checked={isHome ? isHome : checked} id={route.title} onChange={(e) => {
                     e.preventDefault();
+                    if (route.path) {
+                        e.stopPropagation();
+                        router.push(route.path);
+                    }
                 }} />
-                <label className="tree_label" htmlFor={route.title}>{route.title}</label>
+                <label onClick={(e) => { 
+                    if (route.path) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (path === route.path) {
+                            setChecked(!checked);
+                        } else {
+                            setChecked(true);
+                            router.push(route.path);
+                        }
+                    }
+                    
+                    console.log(e); 
+                    }} className="tree_label" htmlFor={route.title}>{route.title}</label>
                 <ul>
                     <GenerateMenuTree routes={route.routes} branch={branch} leaf={leaf}/>
                 </ul>

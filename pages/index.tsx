@@ -8,6 +8,70 @@ import { MenuTreeSideBar } from '../component/MenuTreeSideBar';
 import hljs from 'highlight.js';
 import { RouteProps } from '../component/Menu';
 
+const routes: RouteProps = {
+    title: 'madan',
+    routes: [
+        {
+            title: 'Home',
+            path: '/'
+        },
+        {
+            title: 'Web',
+            routes: [
+                {
+                    title: 'Web Api',
+                    path: '/learn/web-stuff/web-api.md'
+                },
+                {
+                    title: 'Cookie',
+                    path: '/learn/web-stuff/cookie.md'
+                }
+            ]
+        },
+        {
+            title: 'React',
+            path: '/learn/web-stuff/react/README.md',
+            routes: [
+                {
+                    title: 'React Hooks',
+                    path: '/learn/web-stuff/react/hooks.md'
+                }
+            ]
+        },
+        {
+            title: 'Drupal',
+            routes: [
+                {
+                    title: 'Drupal 8',
+                    routes: [
+                        {
+                            title: 'Permissions',
+                            path: '/learn/drupal/drupal-8/permissions.md'
+                        },
+                        {
+                            title: 'Data system',
+                            path: '/learn/drupal/drupal-8/type-of-data-storage.md'
+                        },
+                    ]
+                },
+                {
+                    title: 'Drupal 7',
+                    routes: [
+                        {
+                            title: 'Custom Field Widget',
+                            path: '/learn/drupal/drupal-7/custom-field-widget.md'
+                        },
+                        {
+                            title: 'Custom Drush Command',
+                            path: '/learn/drupal/drupal-7/drush-command.md'
+                        },
+                    ]
+                }
+            ]
+        },
+    ]
+};
+
 const user = 'madanlimbu';
 const repo = 'gitbook';
 const branch = 'master';
@@ -80,72 +144,6 @@ function IndexPage({ name, summary }): ReactElement {
         updatePage(path);
         setIsHome(path === '/');
     }, [path]);
-
-
-
-    const routes: RouteProps = {
-        title: 'madan',
-        routes: [
-            {
-                title: 'Home',
-                path: '/'
-            },
-            {
-                title: 'Web',
-                routes: [
-                    {
-                        title: 'Web Api',
-                        path: '/learn/web-stuff/web-api.md'
-                    },
-                    {
-                        title: 'Cookie',
-                        path: '/learn/web-stuff/cookie.md'
-                    }
-                ]
-            },
-            {
-                title: 'React',
-                path: '/learn/web-stuff/react/README.md',
-                routes: [
-                    {
-                        title: 'React Hooks',
-                        path: '/learn/web-stuff/react/hooks.md'
-                    }
-                ]
-            },
-            {
-                title: 'Drupal',
-                routes: [
-                    {
-                        title: 'Drupal 8',
-                        routes: [
-                            {
-                                title: 'Permissions',
-                                path: '/learn/drupal/drupal-8/permissions.md'
-                            },
-                            {
-                                title: 'Data system',
-                                path: '/learn/drupal/drupal-8/type-of-data-storage.md'
-                            },
-                        ]
-                    },
-                    {
-                        title: 'Drupal 7',
-                        routes: [
-                            {
-                                title: 'Custom Field Widget',
-                                path: '/learn/drupal/drupal-7/custom-field-widget.md'
-                            },
-                            {
-                                title: 'Custom Drush Command',
-                                path: '/learn/drupal/drupal-7/drush-command.md'
-                            },
-                        ]
-                    }
-                ]
-            },
-        ]
-    };
 
     return (
         <>
