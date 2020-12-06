@@ -17,6 +17,7 @@ const routes: RouteProps = {
         },
         {
             title: 'Web',
+            path: '/learn/web-stuff/README',
             routes: [
                 {
                     title: 'Web Api',
@@ -25,6 +26,10 @@ const routes: RouteProps = {
                 {
                     title: 'Cookie',
                     path: '/learn/web-stuff/cookie'
+                },
+                {
+                    title: 'OAuth 2.0',
+                    path: '/random/oauth-2.0'
                 }
             ]
         },
@@ -44,6 +49,10 @@ const routes: RouteProps = {
                 {
                     title: 'Drupal 8',
                     routes: [
+                        {
+                            title: 'Drupal 8 Composer scaffolding',
+                            path: '/learn/drupal/drupal-php-thangs'
+                        },
                         {
                             title: 'Permissions',
                             path: '/learn/drupal/drupal-8/permissions'
@@ -69,6 +78,29 @@ const routes: RouteProps = {
                 }
             ]
         },
+        {
+            title: 'Python & Django',
+            routes: [
+                {
+                    title: 'Intro to Pythonism',
+                    path: '/learn/python-django/pythonism'
+                },
+                {
+                    title: 'Django',
+                    routes: [
+                        {
+                            title: 'Django Overview',
+                            path: '/learn/python-django/untitled/overview'
+                        },
+                        {
+                            title: 'Tools',
+                            path: '/learn/python-django/untitled/tools'
+                        }
+                    ]
+                }
+            ]
+        },
+
     ]
 };
 
