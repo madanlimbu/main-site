@@ -20,21 +20,21 @@ const routes: RouteProps = {
             routes: [
                 {
                     title: 'Web Api',
-                    path: '/learn/web-stuff/web-api.md'
+                    path: '/learn/web-stuff/web-api'
                 },
                 {
                     title: 'Cookie',
-                    path: '/learn/web-stuff/cookie.md'
+                    path: '/learn/web-stuff/cookie'
                 }
             ]
         },
         {
             title: 'React',
-            path: '/learn/web-stuff/react/README.md',
+            path: '/learn/web-stuff/react/README',
             routes: [
                 {
                     title: 'React Hooks',
-                    path: '/learn/web-stuff/react/hooks.md'
+                    path: '/learn/web-stuff/react/hooks'
                 }
             ]
         },
@@ -46,11 +46,11 @@ const routes: RouteProps = {
                     routes: [
                         {
                             title: 'Permissions',
-                            path: '/learn/drupal/drupal-8/permissions.md'
+                            path: '/learn/drupal/drupal-8/permissions'
                         },
                         {
                             title: 'Data system',
-                            path: '/learn/drupal/drupal-8/type-of-data-storage.md'
+                            path: '/learn/drupal/drupal-8/type-of-data-storage'
                         },
                     ]
                 },
@@ -59,11 +59,11 @@ const routes: RouteProps = {
                     routes: [
                         {
                             title: 'Custom Field Widget',
-                            path: '/learn/drupal/drupal-7/custom-field-widget.md'
+                            path: '/learn/drupal/drupal-7/custom-field-widget'
                         },
                         {
                             title: 'Custom Drush Command',
-                            path: '/learn/drupal/drupal-7/drush-command.md'
+                            path: '/learn/drupal/drupal-7/drush-command'
                         },
                     ]
                 }
@@ -76,11 +76,11 @@ const user = 'madanlimbu';
 const repo = 'gitbook';
 const branch = 'master';
 const pageToUrl = (pageName: string) => {
-    return `https://raw.githubusercontent.com/${user}/${repo}/${branch}${pageName}`;
+    return `https://raw.githubusercontent.com/${user}/${repo}/${branch}${pageName}.md`;
 }
 
 export async function getStaticProps() {
-    const summaryData = await fetch(pageToUrl('/SUMMARY.md'));
+    const summaryData = await fetch(pageToUrl('/SUMMARY'));
     const summary = await summaryData.text();
 
     return { props: { name: 'madan', summary } }
@@ -126,9 +126,9 @@ function IndexPage({ name, summary }): ReactElement {
             // Todo: Update showdown to add slash "/" infront of hrefs.
             setBaseUrl(window.location.origin);
             const tempUrlArray = [
-                '/README.md',
-                '/learn/README.md',
-                '/random/README.md'
+                '/README',
+                '/learn/README',
+                '/random/README'
             ];
             if (tempUrlArray.includes(window.location.pathname)) {
                 setIsTemp(true);
