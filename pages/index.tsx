@@ -7,6 +7,7 @@ import Header from '../component/Header';
 import { MenuTreeSideBar } from '../component/MenuTreeSideBar';
 import hljs from 'highlight.js';
 import { RouteProps } from '../component/Menu';
+import { route } from 'next/dist/next-server/server/router';
 
 const routes: RouteProps = {
     title: 'madan',
@@ -118,6 +119,12 @@ export async function getStaticProps() {
     return { props: { name: 'madan', summary } }
 }
 
+export type MetaDataProps = {
+    title?: string;
+    description?: string;
+    keywords?: string;
+}
+
 function IndexPage({ name, summary }): ReactElement {
     const [page, setPage] = useState('');
     const [menu, setMenu] = useState('');
@@ -125,7 +132,8 @@ function IndexPage({ name, summary }): ReactElement {
     const [baseUrl, setBaseUrl] = useState('');
     const [isHome, setIsHome] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
-
+    const [metaData, setMetaData] = useState<MetaDataProps>(null);
+    const [currentRoute, setCurrentRoute] = useState<RouteProps>({ title: 'Madan Learns'});
     showdown.setFlavor('github');
     const show = new showdown.Converter();
 
@@ -138,7 +146,7 @@ function IndexPage({ name, summary }): ReactElement {
         } else {
             const res = await fetch(pageToUrl(path));
             const pageText = await res.text();
-            
+            setMetaData({ description: pageText.substring(0, 150) });
             const pageHtml = show.makeHtml(pageText);
             setPage(pageHtml);
         }
@@ -175,21 +183,47 @@ function IndexPage({ name, summary }): ReactElement {
     useEffect(() => {
         updatePage(path);
         setIsHome(path === '/');
+        search(routes, path);
     }, [path]);
+
+    const search = (routes: RouteProps, keyword) => {
+        if(routes.path && routes.path === keyword) {
+            setCurrentRoute(routes);
+            return routes;
+        } else {
+            if (routes.routes) {
+                routes.routes.find(route => {
+                     search(route, keyword);
+                });
+            }
+        }
+    };
 
     return (
         <>
         <Head>
-            <meta charSet="utf-8" />
+            <link rel="shortcut icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/12434457?s=460&u=d33f17b31e3dd616e415c3f928e952f8ccc3bb9b&v=4" />
+            <meta http-equiv="Content-Type" content="text/html; charSet=utf-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <meta property="og:title" content="Learn" key="title" />
+            
+            <meta property="og:title" content={metaData && metaData.title || currentRoute.title} key="title" />
+            <meta name="description" content={metaData && metaData.description || currentRoute.title} key="title" />
+            <meta name="keywords" content={metaData && metaData.keywords || currentRoute.title} />
+            <meta property="og:type" content="website" />
+            <meta property="og:site_name" content="Madan Tech" />
+           
+            <title>{metaData && metaData.title || currentRoute.title}</title>
             <base href={baseUrl} />
-            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/styles/default.min.css" />            <script data-ad-client="ca-pub-7420131458491934" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/styles/default.min.css" />            
+            <script data-ad-client="ca-pub-7420131458491934" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </Head>
         <div className={`container ${isHome ? `container-full` : ``}`}>
             {/* <nav dangerouslySetInnerHTML={{ __html: menu}} /> */}
-            <aside><MenuTreeSideBar {...routes} /></aside>
+            <aside>
+                <img class="avatar" src="https://avatars2.githubusercontent.com/u/12434457?s=460&u=d33f17b31e3dd616e415c3f928e952f8ccc3bb9b&v=4" />
+                <MenuTreeSideBar {...routes} />
+            </aside>
             <main>
                 {isTemp ? <div className="tree" dangerouslySetInnerHTML={{ __html: menu}} /> : 
                 <div ref={ref} className="content" dangerouslySetInnerHTML={{ __html: page}} />}

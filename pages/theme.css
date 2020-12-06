@@ -26,3 +26,19 @@ aside {
     z-index: 1;
     padding: 0px;
 }
+
+.avatar {
+    border-radius: 50%!important;
+    height: auto;
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1;
+    vertical-align: middle;
+    background-color: var(--color-avatar-bg);
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px var(--color-avatar-border);
+}
+
+.container-full .avatar {
+    max-width: 230px;
+}
