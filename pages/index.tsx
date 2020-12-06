@@ -21,6 +21,7 @@ export async function getStaticProps() {
 function IndexPage({ name, summary }): ReactElement {
     const [page, setPage] = useState('');
     const [menu, setMenu] = useState('');
+    const [isTemp, setIsTemp] = useState(false);
     const [baseUrl, setBaseUrl] = useState('');
 
     showdown.setFlavor('github');
@@ -41,6 +42,16 @@ function IndexPage({ name, summary }): ReactElement {
         if (typeof window !== undefined) {
             // Todo: Update showdown to add slash "/" infront of hrefs.
             setBaseUrl(window.location.origin);
+            const tempUrlArray = [
+                '/README.md',
+                '/learn/README.md',
+                '/random/README.md'
+            ];
+            console.log(`path`, window.location.pathname)
+            console.log(`is temp ?`, tempUrlArray.includes(window.location.pathname));
+            if (tempUrlArray.includes(window.location.pathname)) {
+                setIsTemp(true);
+            }
         }
     }, []);
 
@@ -80,7 +91,8 @@ function IndexPage({ name, summary }): ReactElement {
             <nav className="nav" dangerouslySetInnerHTML={{ __html: menu}} />
         </header>
         <div className="main">
-            <div className="content" dangerouslySetInnerHTML={{ __html: page}} />
+            {isTemp ? <div className="tree" dangerouslySetInnerHTML={{ __html: menu}} /> : 
+            <div className="content" dangerouslySetInnerHTML={{ __html: page}} />}
         </div>
         </>
         );
