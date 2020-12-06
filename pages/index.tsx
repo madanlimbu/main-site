@@ -26,7 +26,7 @@ function IndexPage({ name, summary }): ReactElement {
     const show = new showdown.Converter();
 
     const router = useRouter();
-    const path = router.asPath;
+    const path = router.asPath === '/' ? '/README.md' : router.asPath;
 
     const updatePage = async (path) => {
         const res = await fetch(pageToUrl(path));
@@ -49,7 +49,7 @@ function IndexPage({ name, summary }): ReactElement {
 
     useEffect(() => {
         updatePage(path);
-    }, [path]);
+    }, []);
 
 
     return (
