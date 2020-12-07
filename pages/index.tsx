@@ -112,7 +112,7 @@ const pageToUrl = (pageName: string) => {
     return `https://raw.githubusercontent.com/${user}/${repo}/${branch}${pageName}.md`;
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const summaryData = await fetch(pageToUrl('/SUMMARY'));
     const summary = await summaryData.text();
 
