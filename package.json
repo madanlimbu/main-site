@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "dev": "set NODE_ENV=development & next",
+        "dev": "next dev",
         "build": "next build && next start",
         "start": "next start",
         "check": "tsc"
