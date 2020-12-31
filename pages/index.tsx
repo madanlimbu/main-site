@@ -1,26 +1,41 @@
-import { RouteProps } from "../components/Menu";
-import { getMenus } from '../lib/apits';
+import Head from "next/head";
+import Posts from "../components/Posts";
+import { RoutesCollection } from "../lib/api/contentful/interface";
+import queryRoutes from "../lib/api/contentful/routes";
 
 export type IndexPageProps = {
-    // menuTree?: RouteProps;
-    m: {}
+    routes: RoutesCollection;
 }
 
-function IndexPage({ m }: IndexPageProps) {
-    console.log(`m`, m);
+function IndexPage(props: IndexPageProps) {
+    const { routes } = props;
+
     return (
         <>
+        <Head>
+            <title>Mainer</title>
+        </Head>
+        <Posts/>
+        {
+        routes
+        .routesCollection
+        .items
+        .find(menu => menu.name === 'Menus')
+        .routes
+        .routes
+        .map(route => <div className="main-menu" key={route.title} >{route.title}</div>)
+        }
         </>
     );
 }
 
-export async function getStaticProps({ preview = false }) {
-    const menus = (await getMenus() ?? []);
-    debugger;
-    console.log(`menus`, menus);
+export async function getServerSideProps({ preview = false }) {
+    const routes = (await queryRoutes({ preview: preview }) ?? {});
     return {
-         props: { m: menus }
-    }
+         props: {
+             routes: routes,
+         }
+    };
 }
 
 export default IndexPage;

@@ -1,14 +1,27 @@
-export type ContentFullResponse = {
+export type ContentfulErrorResponse = {
+    errors: {
+        message: string;
+        extensions: {
+            contentful: {
+                code: string;
+                requestId: string;
+            }
+        }
+    }[];
+}
+
+export type ContentfulSucessfulResponse = {
     data: {}
 }
 
 export type CollectionProps = {
-    response: 
+    response: ContentfulSucessfulResponse 
     type: string;
 }
 
 export function contentful() {
-    function extractCollection({ type }: CollectionProps) {
+    function extractCollection({ response, type }: CollectionProps) {
+        return response.data[type];
     }
 
     return {

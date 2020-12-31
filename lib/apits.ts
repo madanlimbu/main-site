@@ -1,5 +1,8 @@
-export async function fetchGraphQL(query, preview = false) {
-    return fetch(
+import { RouteProps } from "../old/component/Menu";
+import { contentful, ContentfulSucessfulResponse } from "./preprocess/preprocess";
+
+export async function fetchGraphQL(query, preview = false): Promise<ContentfulSucessfulResponse> {
+    const response = await fetch(
         `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`, {
             method: 'POST',
             headers: {
@@ -12,21 +15,49 @@ export async function fetchGraphQL(query, preview = false) {
             },
             body: JSON.stringify({ query }),
         }
-    ).then((response) => response.json())
+    )
+    .then(response => response.json())
+    .catch(e => {
+      console.log(`Error on network request.`);
+      throw e;
+    });
+
+  console.log(`responsess`, response);
+
+  if (response?.errors) {
+    console.log(`Error on response`);
+    throw response;
+  }
+
+  return response;  
 }
 
-export async function getMenus() {
+export type RouteProps = {
+  title: string;
+  path?: string;
+  routes?: RouteProps[];
+}
+
+export type RoutesCollection = {
+  name: string;
+  routes: RouteProps;
+}
+interface QueryMenuProps {
+  menuName?: string;
+  preview: boolean;
+}
+ 
+export async function queryMenus({ menuName, preview }: QueryMenuProps): Promise<RoutesCollection[]> {
     const menus = await fetchGraphQL(
         `query {
-          routesCollection(where: { 
-            name: "Menus"
-          }, preview: true) {
+          routesCollection(${menuName ? `where: { name: ${menuName} },` : ''} preview: ${preview} ) {
             items {
               name
               routes
             }
           }
-        }`, true
-    )
-    return menus;
+        }`, preview
+    );
+    return menus.data['routesCollection'].items;
+    // return contentful().extractCollection({ response: menus, type: 'routesCollection' });
 }
