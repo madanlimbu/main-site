@@ -218,8 +218,7 @@ function IndexPage({ name, summary }): ReactElement {
             <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.1/styles/default.min.css" />            
             <script data-ad-client="ca-pub-7420131458491934" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             
-            <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/7e7a4e264d6d5e13aa0c0ebdc/3ed24d69732b0ae27409de8ca.js");</script>
-        </Head>
+<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/7e7a4e264d6d5e13aa0c0ebdc/0edb11321b28a61ffad65124d.js");</script>        </Head>
         <div className={`container ${isHome ? `container-full` : ``}`}>
             {/* <nav dangerouslySetInnerHTML={{ __html: menu}} /> */}
             <aside>
