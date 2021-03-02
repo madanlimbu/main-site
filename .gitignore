@@ -3,6 +3,7 @@ www/
 .vscode/
 .next/
 docs/
+.idea/
 
 .DS_Store
 yarn-error.log

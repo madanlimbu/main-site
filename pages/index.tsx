@@ -12,11 +12,11 @@ function IndexPage(props: IndexPageProps) {
 
     return (
         <>
-        <Head>
+        {/* <Head>
             <title>Mainer</title>
-        </Head>
+        </Head> */}
         <Posts/>
-        {
+        {/* {
         routes
         .routesCollection
         .items
@@ -24,7 +24,7 @@ function IndexPage(props: IndexPageProps) {
         .routes
         .routes
         .map(route => <div className="main-menu" key={route.title} >{route.title}</div>)
-        }
+        } */}
         </>
     );
 }
