@@ -1,22 +1,10 @@
 import { ReactElement, useEffect, useState } from "react"
 import api from "../../lib/api/client";
 import { PostContentType } from "../../lib/api/contentful/interface";
+import PostCard from "../PostCard";
 import "./Posts.scss";
 
 const SIZE = 1;
-
-function PostCard(summary: PostContentType) {
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const date = new Date(summary.date);
-    const formattedDate = `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
-    return (
-        <a className="post__card" href={`/posts/${summary.slug}`}>
-            <div>{formattedDate}</div>
-            <h5>{summary.title}</h5>
-            <div>{summary.excerpt}</div>
-        </a>
-    )
-}
 
 export default function Posts(): ReactElement {
     const [postList, setPostList] = useState<PostContentType[]>([]);

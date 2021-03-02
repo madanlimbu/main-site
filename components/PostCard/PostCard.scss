@@ -1,0 +1,12 @@
+.post-card {
+  text-decoration: none;
+  color: var(--font-color);
+  &__date {
+  }
+  &__title {
+    font-size: 2rem;
+  }
+  &__summary {
+    font-size: 1.2rem;
+  }
+}

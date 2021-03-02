@@ -1,4 +1,8 @@
-.theme-light {
+// Global variables
+
+// Theme colours
+.theme-light, body {
+    --color-background: #ffffff;
     --color-primary: #0060df;
     --color-secondary: #fbfbfe;
     --color-accent: #857b79;
@@ -6,8 +10,53 @@
 }
 
 .theme-dark {
+    --color-background: #000000;
     --color-primary: #17ed90;
     --color-secondary: #243133;
     --color-accent: #12cdea;
     --font-color: #ffffff;
+}
+
+// Variables
+
+// Breakpoints
+$breakpoints: (
+    xs: 576px,
+    sm: 768px,
+    md: 992px,
+    lg: 1200px
+);
+
+// Mixins
+// @include respond-above(sm) {}
+@mixin respond-above($breakpoint) {
+    // If the breakpoint exists in the map.
+    @if map-has-key($breakpoints, $breakpoint) {
+        // Get the breakpoint value.
+        $breakpoint-value: map-get($breakpoints, $breakpoint);
+        // Write the media query.
+        @media (min-width: $breakpoint-value) {
+            @content;
+        }
+        // If the breakpoint doesn't exist in the map.
+    } @else {
+        // Log a warning.
+        @warn 'Invalid breakpoint: #{$breakpoint}.';
+    }
+}
+
+// Reusable layouts
+
+// Actual content/components reside on
+.content-wrapper {
+    margin: 0rem 0.8rem;
+    @include respond-above('md') {
+        max-width: 640px;
+        margin: auto;
+    }
+}
+
+// fonts
+h5 {
+    margin: 0rem;
 }

@@ -15,7 +15,9 @@ function IndexPage(props: IndexPageProps) {
         {/* <Head>
             <title>Mainer</title>
         </Head> */}
-        <Posts/>
+        <div className="content-wrapper">
+            <Posts />
+        </div>
         {/* {
         routes
         .routesCollection
