@@ -14,3 +14,9 @@ export interface DynamicPageParams {
     };
     preview: boolean;
 }
+
+export type RouteProps = {
+    title: string;
+    path?: string;
+    routes?: RouteProps[];
+}

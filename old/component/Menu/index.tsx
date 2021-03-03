@@ -1,10 +1,11 @@
 import { ReactElement } from "react";
+import { RouteProps } from "../../../lib/api/Interface";
 
-export type RouteProps = {
-    title: string;
-    path?: string;
-    routes?: RouteProps[];
-}
+// export type RouteProps = {
+//     title: string;
+//     path?: string;
+//     routes?: RouteProps[];
+// }
 
 export type GenerateMenuTreeProps = {
     routes: RouteProps[];

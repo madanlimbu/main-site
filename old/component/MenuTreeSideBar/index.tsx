@@ -1,6 +1,7 @@
 import { Router, useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
-import { GenerateMenuTree, RouteProps } from "../Menu";
+import { GenerateMenuTree } from "../Menu";
+import { RouteProps } from "../../../lib/api/Interface";
 
 export function MenuTreeSideBar({ routes }: RouteProps): ReactElement {
     const router = useRouter();

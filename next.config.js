@@ -16,7 +16,18 @@ module.exports = {
         ],
       })
     }
-
+    config.module.rules.push({
+      test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'static/assets',
+          }
+        }
+      ]
+    })
     // Important: return the modified config
     return config
   },

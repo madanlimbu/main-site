@@ -1,4 +1,16 @@
 // Global variables
+html {
+    font-size: 16px;
+}
+
+@font-face {
+    font-family: 'Pixelated';
+    src: url('fonts/DotGothic16-Regular.ttf')  format('truetype');
+}
+
+body {
+    font-family: 'Pixelated';
+}
 
 // Theme colours
 .theme-light, body {

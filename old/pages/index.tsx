@@ -6,7 +6,7 @@ import { Console } from 'console';
 import Header from '../component/Header';
 import { MenuTreeSideBar } from '../component/MenuTreeSideBar';
 import hljs from 'highlight.js';
-import { RouteProps } from '../component/Menu';
+import { RouteProps } from "../../lib/api/Interface";
 import { route } from 'next/dist/next-server/server/router';
 
 const routes: RouteProps = {

@@ -1,3 +1,4 @@
+import { RouteProps } from "../Interface";
 import { Document } from "@contentful/rich-text-types";
 
 export type CollectionParams= {
@@ -19,11 +20,11 @@ export type ContentfulSucessfulResponse<T> = {
 //     nodeType: string;
 // }
 
-export type RouteProps = {
-    title: string;
-    path?: string;
-    routes?: RouteProps[];
-}
+// export type RouteProps = {
+//     title: string;
+//     path?: string;
+//     routes?: RouteProps[];
+// }
 
 export type RouteContentType = {
     name: string;

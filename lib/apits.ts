@@ -1,5 +1,6 @@
-import { RouteProps } from "../old/component/Menu";
+import { RouteProps } from "./api/Interface";
 import { contentful, ContentfulSucessfulResponse } from "./preprocess/preprocess";
+
 
 export async function fetchGraphQL(query, preview = false): Promise<ContentfulSucessfulResponse> {
     const response = await fetch(
@@ -30,12 +31,6 @@ export async function fetchGraphQL(query, preview = false): Promise<ContentfulSu
   }
 
   return response;  
-}
-
-export type RouteProps = {
-  title: string;
-  path?: string;
-  routes?: RouteProps[];
 }
 
 export type RoutesCollection = {

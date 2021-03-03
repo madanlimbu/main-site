@@ -2,11 +2,13 @@
   text-decoration: none;
   color: var(--font-color);
   &__date {
+    font-size: 0.9rem;
   }
   &__title {
-    font-size: 2rem;
+    font-size: 1.6rem;
+    margin: 1rem 0rem 0.8rem;
   }
   &__summary {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 }
