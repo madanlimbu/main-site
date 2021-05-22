@@ -6,12 +6,24 @@ import "./Posts.scss";
 
 const SIZE = 1;
 
-export default function Posts(): ReactElement {
-    const [postList, setPostList] = useState<PostContentType[]>([]);
-    const [current, setCurrent] = useState<number>(0);
-    const [offset, setOffset] = useState<number>(0);
-    const [total, setTotal] = useState<number>(0);
-    const [hasMore, setHasMore] = useState<boolean>(false);
+export type PostsProps = {
+    postList: PostContentType[];
+    current: number;
+    offset: number;
+    total: number;
+    hasMore: boolean;
+}
+
+export default function Posts(props: PostsProps): ReactElement {
+    const [postList, setPostList] = useState<PostContentType[]>(props.postList);
+    const [current, setCurrent] = useState<number>(props.current);
+    const [offset, setOffset] = useState<number>(props.offset);
+    const [total, setTotal] = useState<number>(props.total);
+    const [hasMore, setHasMore] = useState<boolean>(props.hasMore);
+
+    useEffect(() => {
+        console.log(`Post props`, props);
+    }, []);
 
     const fetchMore = () => {
         setOffset(value => total > (SIZE + value) ? (value + SIZE) : total - (value + SIZE));
