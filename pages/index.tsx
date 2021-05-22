@@ -1,10 +1,14 @@
 import Head from "next/head";
-import Posts from "../components/Posts";
+import Posts, { PostsProps } from "../components/Posts";
 import { RoutesCollection } from "../lib/api/contentful/interface";
 import queryRoutes from "../lib/api/contentful/routes";
+import api from "../lib/api/client";
 
-export type IndexPageProps = {
+const POSTS_SIZE = 1;
+
+type IndexPageProps = {
     routes: RoutesCollection;
+    postsProps: PostsProps;
 }
 
 function IndexPage(props: IndexPageProps) {
@@ -16,7 +20,7 @@ function IndexPage(props: IndexPageProps) {
             <title>Mainer</title>
         </Head> */}
         <div className="content-wrapper">
-            <Posts />
+            <Posts {...props.postsProps}/>
         </div>
         {/* {
         routes
@@ -33,10 +37,25 @@ function IndexPage(props: IndexPageProps) {
 
 export async function getServerSideProps({ preview = false }) {
     const routes = (await queryRoutes({ preview: preview }) ?? {});
+    const postsProps: PostsProps = await api.getPosts({
+        skip: 0,
+        limit: POSTS_SIZE,
+        preview: false,
+    }).then(postCollection => {
+        return {
+            postList: postCollection.postCollection.items,
+            current: 0 + POSTS_SIZE,
+            offset: 0 + POSTS_SIZE,
+            total: postCollection.postCollection.total,
+            hasMore: postCollection.postCollection.total > (0 + POSTS_SIZE)
+        };
+    });
+
     return {
-         props: {
-             routes: routes,
-         }
+        props: {
+            routes: routes,
+            postsProps: postsProps
+        }
     };
 }
 

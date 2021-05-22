@@ -5,8 +5,10 @@ export interface ServiceRequest {
     args?: unknown
 }
 
+const API_ENDPOINT = 'http://localhost:3000';
+
 function requestApi(req?: ServiceRequest) {
-    return fetch(`/api/proxy`, {
+    return fetch(`${API_ENDPOINT}/api/proxy`, {
         method: 'POST',
         body: JSON.stringify(req),
         headers: {
