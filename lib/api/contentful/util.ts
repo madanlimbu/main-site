@@ -1,7 +1,7 @@
 import { CollectionParams } from "./interface";
 
 export function convertCollectionParamsToQuery(params: CollectionParams): string {
-        let queries: Array<string> = [];
+        const queries: Array<string> = [];
 
         console.log(`params: `, params);
 

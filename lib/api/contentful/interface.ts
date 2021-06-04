@@ -1,7 +1,7 @@
 import { RouteProps } from "../Interface";
 import { Document } from "@contentful/rich-text-types";
 
-export type CollectionParams= {
+export type CollectionParams = {
     skip?: number;
     limit?: number;
     where?: string;
@@ -66,4 +66,8 @@ export type PostCollection = {
 
 export type RoutesCollection = {
     routesCollection: ContentCollection<RouteContentType>;
+}
+
+export type ContentfulApi = {
+    getPosts(query: CollectionParams): Promise<PostCollection>
 }

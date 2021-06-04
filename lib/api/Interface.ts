@@ -1,7 +1,10 @@
-import { CollectionParams, PostCollection } from "../api/contentful/interface";
-
 export interface Api {
-    getPosts(query: CollectionParams): Promise<PostCollection>
+    getPosts: <T, F>(q: T) => Promise<F>,
+}
+
+export interface ServiceRequest {
+    service: string,
+    args?: unknown
 }
 
 export interface ServerSideProps<T> {

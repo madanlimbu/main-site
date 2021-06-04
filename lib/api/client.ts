@@ -1,14 +1,13 @@
-import { Api } from "./Interface";
+import { ServiceRequest, Api } from "./Interface";
+import { ContentfulApi } from "./contentful/interface";
 
-export interface ServiceRequest {
-    service: string,
-    args?: unknown
-}
-
-const API_ENDPOINT = 'http://localhost:3000';
+// const API_ENDPOINT = 'http://localhost:3000';
+const API_ENDPOINT = 'http://localhost:3000/api/contentful';
 
 function requestApi(req?: ServiceRequest) {
-    return fetch(`${API_ENDPOINT}/api/proxy`, {
+    console.log(`requestApi:`, req);
+    return fetch(`${API_ENDPOINT}`, {
+        // return fetch(`${API_ENDPOINT}/api/proxy`, {
         method: 'POST',
         body: JSON.stringify(req),
         headers: {
@@ -18,7 +17,7 @@ function requestApi(req?: ServiceRequest) {
     }).then(r => r.json());
 }
 
-const api: Api = {
+const api: ContentfulApi = {
     getPosts(query) {
         return requestApi({
             service: 'getPosts',

@@ -28,7 +28,7 @@ export default function Posts(props: PostsProps): ReactElement {
 
     const fetchMore = () => {
         setOffset(value => total > (SIZE + value) ? (value + SIZE) : total - (value + SIZE));
-    }
+    };
 
     useEffect(() => {
         if (notInitialRender.current) {
@@ -52,7 +52,7 @@ export default function Posts(props: PostsProps): ReactElement {
             <h2>Latest posts</h2>
             <ul>
                 {postList.map(post => (
-                    <li key={encodeURIComponent(post.title)} >
+                    <li key={encodeURIComponent(post.title)} className={encodeURIComponent(post.title)} >
                         <PostCard {...post} />
                     </li>
                 ))}

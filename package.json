@@ -6,13 +6,17 @@
         "build": "next build",
         "start": "next start",
         "setup": "node ./contentful/setup.js $CONTENTFUL_SPACE_ID $CONTENTFUL_MANAGEMENT_TOKEN",
-        "check": "tsc"
+        "check": "tsc",
+        "lint": "eslint . --ext .ts"
     },
     "dependencies": {
         "@contentful/rich-text-react-renderer": "^14.1.2",
         "@contentful/rich-text-types": "^14.1.2",
+        "@typescript-eslint/eslint-plugin": "^4.26.0",
+        "@typescript-eslint/parser": "^4.26.0",
         "classnames": "2.2.6",
         "date-fns": "2.14.0",
+        "eslint": "^7.27.0",
         "highlight.js": "^10.4.1",
         "next": "latest",
         "react": "^16.13.1",

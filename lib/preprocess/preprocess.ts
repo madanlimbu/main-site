@@ -11,7 +11,7 @@ export type ContentfulErrorResponse = {
 }
 
 export type ContentfulSucessfulResponse = {
-    data: {}
+    data: unknown;
 }
 
 export type CollectionProps = {

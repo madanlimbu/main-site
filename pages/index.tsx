@@ -44,10 +44,10 @@ export async function getServerSideProps({ preview = false }) {
     }).then(postCollection => {
         return {
             postList: postCollection.postCollection.items,
-            current: 0 + POSTS_SIZE,
-            offset: 0 + POSTS_SIZE,
+            current: POSTS_SIZE,
+            offset: 0,
             total: postCollection.postCollection.total,
-            hasMore: postCollection.postCollection.total > (0 + POSTS_SIZE)
+            hasMore: postCollection.postCollection.total > (POSTS_SIZE)
         };
     });
 
