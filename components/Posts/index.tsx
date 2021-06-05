@@ -57,10 +57,13 @@ export default function Posts(props: PostsProps): ReactElement {
                     </li>
                 ))}
             </ul>
-            {hasMore && <button onClick={(e) => {
-                e.preventDefault();
-                fetchMore();
-            }} >Load more</button>}
+            {hasMore &&
+            <div className="posts__load-more">
+                <button onClick={(e) => {
+                    e.preventDefault();
+                    fetchMore();
+                }} >Load more</button>
+            </div>}
         </div>
     )
 }

@@ -20,6 +20,34 @@ export const postCollectionQueryGraphQL = (query: CollectionParams): string => (
         }
         content {
           json
+          links {
+            entries {
+              inline {
+               sys {
+                id
+               }
+               __typename
+              }
+              block {
+                sys {
+                 id
+                }
+                __typename
+              }
+            }
+            assets {
+              block {
+                sys {
+                  id
+                }
+                url
+                title
+                width
+                height
+                description
+              }
+            }
+          }
         }
       }
     }

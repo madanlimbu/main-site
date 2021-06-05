@@ -1,10 +1,9 @@
 import { PostContentType } from "../../lib/api/contentful/interface";
 import "./PostCard.scss";
+import {getFormattedDate} from "../../lib/utils/global";
 
 export default function Index(summary: PostContentType) {
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const date = new Date(summary.date);
-    const formattedDate = `${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+    const formattedDate = getFormattedDate(summary.date);
     return (
         <a className="post-card" href={`/posts/${summary.slug}`}>
             <div className="post-card__date">{formattedDate}</div>

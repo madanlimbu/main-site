@@ -52,7 +52,27 @@ export interface PostContentType {
     };
     content: {
         json: Document;
+        links: {
+            entries: {
+                inline: [unknown];
+                block: [unknown];
+            };
+            assets: {
+                block: ImageBlock[];
+            }
+        }
     };
+}
+
+export type ImageBlock = {
+    sys: {
+        id: string;
+    };
+    url: string;
+    title: string;
+    width: number;
+    height: number;
+    description: string | null;
 }
 
 export type ContentCollection<T> = {

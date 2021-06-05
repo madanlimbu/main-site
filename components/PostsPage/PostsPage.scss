@@ -1,0 +1,16 @@
+.posts-page {
+  &__header-image {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0rem;
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  &__body {
+    > hr:first-child {
+      margin-bottom: 2rem;
+    }
+  }
+}
