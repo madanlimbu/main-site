@@ -1,4 +1,3 @@
-import RichText from "../../components/Contentful/RichText";
 import { PostContentType } from "../../lib/api/contentful/interface";
 import { DynamicPageParams, ServerSideProps } from "../../lib/api/Interface";
 import api from "../../lib/api/client";
