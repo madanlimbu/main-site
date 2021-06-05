@@ -13,20 +13,25 @@ body {
 }
 
 // Theme colours
-.theme-light, body {
+body.theme-light {
     --color-background: #ffffff;
-    --color-primary: #0060df;
-    --color-secondary: #fbfbfe;
-    --color-accent: #857b79;
+    --color-primary: #f4f2f0;
+    --color-secondary: #f4f2f0;
+    --color-accent: #f4f2f0;
     --font-color: #000000;
 }
 
-.theme-dark {
+body.theme-dark {
     --color-background: #000000;
-    --color-primary: #17ed90;
-    --color-secondary: #243133;
-    --color-accent: #12cdea;
+    --color-primary: #292928;
+    --color-secondary: #292928;
+    --color-accent: #292928;
     --font-color: #ffffff;
+}
+
+body {
+    background: var(--color-background);
+    color: var(--font-color);
 }
 
 // Variables

@@ -6,7 +6,8 @@ import "./RichText.scss";
 
 export default function RichText(content: PostContentType['content']): ReactElement {
     console.log(`RirchText: `, content);
-    console.log(`Embed image: `, content.json.content[5]);
+    console.log(`RirchText content: `, content.json.content);
+    console.log(`Embed image: `, content.json.content[8]);
     console.log(`Links assets: `, content.links.assets.block);
 
     const { json, links } = content;

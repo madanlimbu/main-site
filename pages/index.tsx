@@ -3,6 +3,7 @@ import Posts, { PostsProps } from "../components/Posts";
 import { RoutesCollection } from "../lib/api/contentful/interface";
 import queryRoutes from "../lib/api/contentful/routes";
 import api from "../lib/api/client";
+import Navigation from "../components/Navigation";
 
 const POSTS_SIZE = 1;
 
@@ -16,21 +17,22 @@ function IndexPage(props: IndexPageProps) {
 
     return (
         <>
-        {/* <Head>
-            <title>Mainer</title>
-        </Head> */}
-        <div className="content-wrapper">
-            <Posts {...props.postsProps}/>
-        </div>
-        {/* {
-        routes
-        .routesCollection
-        .items
-        .find(menu => menu.name === 'Menus')
-        .routes
-        .routes
-        .map(route => <div className="main-menu" key={route.title} >{route.title}</div>)
-        } */}
+            {/* <Head>
+                <title>Mainer</title>
+            </Head> */}
+            <Navigation />
+            <div className="content-wrapper">
+                <Posts {...props.postsProps}/>
+            </div>
+            {/* {
+            routes
+            .routesCollection
+            .items
+            .find(menu => menu.name === 'Menus')
+            .routes
+            .routes
+            .map(route => <div className="main-menu" key={route.title} >{route.title}</div>)
+            } */}
         </>
     );
 }

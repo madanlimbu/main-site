@@ -1,0 +1,23 @@
+.navigation {
+  background: var(--color-secondary);
+  header {
+    padding: 2rem 0rem;
+    display: flex;
+    justify-content: space-between;
+    a {
+      letter-spacing: 0.05rem;
+      text-decoration: none;
+      color: var(--font-color);
+      &:visited {
+        color: var(--font-color);
+      }
+    }
+  }
+  &__home {
+    font-size: 1.5rem;
+  }
+  &__right, &__left {
+    display: flex;
+    align-items: flex-end;
+  }
+}
