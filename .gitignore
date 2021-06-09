@@ -2,7 +2,7 @@ node_modules/
 www/
 .vscode/
 .next/
-docs/
+\docs/
 .idea/
 
 .DS_Store
