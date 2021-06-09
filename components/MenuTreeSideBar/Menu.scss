@@ -62,15 +62,17 @@
 .tree_label {
   position: relative;
   display: inline-block;
-  background: #fff;
 }
 
 label.tree_label {
   cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.5rem;
+  background: pink;
 }
 
 label.tree_label:hover {
-  color: #666;
+  //color: var(--color-secondary);
 }
 
 
@@ -79,8 +81,8 @@ label.tree_label:hover {
 */
 
 label.tree_label:before {
-  background: #000;
-  color: #fff;
+  background: var(--font-color);
+  color: var(--color-background);
   position: relative;
   z-index: 1;
   float: left;
@@ -91,6 +93,9 @@ label.tree_label:before {
   content: '+';
   text-align: center;
   line-height: .9em;
+  position: absolute;
+  top: 0;
+  left: 0rem;
 }
 
 :checked~label.tree_label:before {
@@ -152,7 +157,16 @@ label.tree_label:after {
 
 .tree_custom {
   display: block;
-  background: #eee;
+  //background: var(--color-background);
   padding: 1em;
   border-radius: 0.3em;
+}
+
+.tree {
+  a {
+    color: var(--font-color);
+    &:visited {
+      color: var(--font-color);
+    }
+  }
 }
