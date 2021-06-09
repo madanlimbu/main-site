@@ -8,7 +8,7 @@ export default function MenuTreeSideBar({ routes }: RouteProps): ReactElement {
     const router = useRouter();
 
     const leaf = (route: RouteProps): ReactElement => {
-         return <li key={route.title} onClick={(e) => {
+         return <li key={`leaf-${route.title}`} onClick={(e) => {
              e.preventDefault();
              e.stopPropagation();
              router.push(route.path);
@@ -30,7 +30,7 @@ export default function MenuTreeSideBar({ routes }: RouteProps): ReactElement {
         
         const [checked, setChecked] = useState(false);
         return (
-            <li key={route.title} onClick={(e) => {
+            <li key={`branch-${route.title}`} onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 setChecked(!checked)
@@ -38,25 +38,35 @@ export default function MenuTreeSideBar({ routes }: RouteProps): ReactElement {
                 <input type="checkbox" checked={isHome ? isHome : checked} id={route.title} onChange={(e) => {
                     e.preventDefault();
                     if (route.path) {
+                        e.preventDefault();
                         e.stopPropagation();
-                        router.push(route.path);
+                        setChecked(!checked);
+                        // if (path === route.path) {
+                        //     setChecked(!checked);
+                        // } else {
+                        //     setChecked(false);
+                        //     // router.push(route.path);
+                        // }
+                        // router.push(route.path);
                     }
                 }} />
                 <label onClick={(e) => { 
                     if (route.path) {
                         e.preventDefault();
                         e.stopPropagation();
-                        if (path === route.path) {
-                            setChecked(!checked);
-                        } else {
-                            setChecked(true);
-                            router.push(route.path);
-                        }
+                        setChecked(!checked);
+                        // if (path === route.path) {
+                        //     setChecked(!checked);
+                        // } else {
+                        //     setChecked(false);
+                        //     // router.push(route.path);
+                        // }
                     }
                     
                     console.log(e); 
                     }} className="tree_label" htmlFor={route.title}>{route.title}</label>
                 <ul>
+                    {leaf(route)}
                     <GenerateMenuTree routes={route.routes} branch={branch} leaf={leaf}/>
                 </ul>
             </li>

@@ -21,6 +21,9 @@ export default function Navigation(): ReactElement {
                         <ThemeToggle />
                     </div>
                     <div className="navigation__right">
+                        <a href="/docs" className={activeUrl('/docs')}>
+                            <span>DOCS</span>
+                        </a>
                         <a href="/about" className={activeUrl('/about')}>
                             <span>ABOUT</span>
                          </a>

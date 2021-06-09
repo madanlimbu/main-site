@@ -122,7 +122,7 @@ function IndexPage(props: IndexPageProps) {
                 <title>Mainer</title>
             </Head> */}
             <Navigation />
-            <MenuTreeSideBar {...githubRoutes} />
+            {/*<MenuTreeSideBar {...githubRoutes} />*/}
             <div className="content-wrapper">
                 <Posts {...props.postsProps}/>
             </div>
