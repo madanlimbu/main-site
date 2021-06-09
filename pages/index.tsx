@@ -4,17 +4,19 @@ import queryRoutes from "../lib/api/contentful/routes";
 import api from "../lib/api/client";
 import Navigation from "../components/Navigation";
 import { RouteProps } from "../components/Menu";
-import { MenuTreeSideBar } from "../old/component/MenuTreeSideBar";
+import MenuTreeSideBar from "../components/MenuTreeSideBar";
+import {getGithubPageRoutes} from "../lib/api/github/utils";
 
 const POSTS_SIZE = 1;
 
 type IndexPageProps = {
-    routes: RoutesCollection;
+    // routes?: RoutesCollection;
+    githubRoutes: RouteProps;
     postsProps: PostsProps;
 }
 
 function IndexPage(props: IndexPageProps) {
-    const { routes } = props;
+    const { githubRoutes } = props;
     const menuProps: RouteProps = {
         title: 'title',
         routes: [
@@ -120,7 +122,7 @@ function IndexPage(props: IndexPageProps) {
                 <title>Mainer</title>
             </Head> */}
             <Navigation />
-            <MenuTreeSideBar {...menuProps} />
+            <MenuTreeSideBar {...githubRoutes} />
             <div className="content-wrapper">
                 <Posts {...props.postsProps}/>
             </div>
@@ -138,7 +140,7 @@ function IndexPage(props: IndexPageProps) {
 }
 
 export async function getServerSideProps({ preview = false }) {
-    const routes = (await queryRoutes({ preview: preview }) ?? {});
+    // const routes = (await queryRoutes({ preview: preview }) ?? {});
     const postsProps: PostsProps = await api.getPosts({
         skip: 0,
         limit: POSTS_SIZE,
@@ -153,9 +155,10 @@ export async function getServerSideProps({ preview = false }) {
         };
     });
 
+    const githubRoutes = await getGithubPageRoutes();
     return {
         props: {
-            routes: routes,
+            githubRoutes: githubRoutes,
             postsProps: postsProps
         }
     };
