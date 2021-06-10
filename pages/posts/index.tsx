@@ -24,6 +24,7 @@ function IndexPage(props: IndexPageProps) {
 
 export async function getServerSideProps(context: DynamicPageParams): Promise<ServerSideProps<IndexPageProps>>  {
     const postsProps: PostsProps = await api.getPosts({
+        where: `{ tag: "blog" }`,
         skip: 0,
         limit: POSTS_SIZE,
         preview: false,
