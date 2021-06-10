@@ -33,6 +33,7 @@ export default function Posts(props: PostsProps): ReactElement {
     useEffect(() => {
         if (notInitialRender.current) {
             api.getPosts({
+                where: `{ tag: "blog" }`,
                 skip: offset,
                 limit: SIZE,
                 preview: false,

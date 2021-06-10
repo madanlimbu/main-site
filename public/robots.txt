@@ -1,0 +1,6 @@
+Sitemap: https://madanlimbu.com/sitemap.xml
+
+User-agent: *
+Allow: /*
+
+Disallow: /api/*

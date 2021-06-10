@@ -24,6 +24,9 @@ export default function Navigation(): ReactElement {
                         <a href="/docs" className={activeUrl('/docs')}>
                             <span>DOCS</span>
                         </a>
+                        <a href="/posts" className={activeUrl('/posts')}>
+                            <span>POSTS</span>
+                        </a>
                         <a href="/about" className={activeUrl('/about')}>
                             <span>ABOUT</span>
                          </a>

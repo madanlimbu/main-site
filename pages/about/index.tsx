@@ -22,7 +22,7 @@ export default function Post({ post, metadata } : PostPageProps) {
 
 export async function getServerSideProps(context : DynamicPageParams): Promise<ServerSideProps<PostPageProps>> {
     const postList = await api.getPosts({
-        where: `{ slug: "${context.params.slug}", tag: "blog" }`,
+        where: `{ slug: "about", tag: "page" }`,
         limit: 1,
         preview: false
     });

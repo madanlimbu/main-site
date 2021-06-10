@@ -1,9 +1,9 @@
-import Posts, { PostsProps } from "../components/Posts";
-import api from "../lib/api/client";
-import {MetadataProps} from "../components/Metadata";
-import {DynamicPageParams, ServerSideProps} from "../lib/api/Interface";
-import PageWrapper from "../components/PageWrapper";
-import {getPageFrontUrl} from "../lib/utils/global";
+import Posts, { PostsProps } from "../../components/Posts";
+import api from "../../lib/api/client";
+import {MetadataProps} from "../../components/Metadata";
+import {DynamicPageParams, ServerSideProps} from "../../lib/api/Interface";
+import PageWrapper from "../../components/PageWrapper";
+import {getPageFrontUrl} from "../../lib/utils/global";
 
 const POSTS_SIZE = 1;
 
@@ -14,18 +14,16 @@ type IndexPageProps = {
 
 function IndexPage(props: IndexPageProps) {
     return (
-            <PageWrapper metadata={props.metadata} >
-                <>
-                    <h1>A website containing personal collection of a developer adventure.</h1>
-                    <Posts {...props.postsProps}/>
-                </>
-            </PageWrapper>
+        <PageWrapper metadata={props.metadata} >
+            <>
+                <Posts {...props.postsProps}/>
+            </>
+        </PageWrapper>
     );
 }
 
 export async function getServerSideProps(context: DynamicPageParams): Promise<ServerSideProps<IndexPageProps>>  {
     const postsProps: PostsProps = await api.getPosts({
-        where: `{ tag: "blog" }`,
         skip: 0,
         limit: POSTS_SIZE,
         preview: false,
@@ -43,8 +41,8 @@ export async function getServerSideProps(context: DynamicPageParams): Promise<Se
         props: {
             postsProps: postsProps,
             metadata: {
-                title: 'Madan Limbu',
-                description: "A website containing personal collection of a developer adventure.",
+                title: 'Posts',
+                description: "List of latest blog post collections.",
                 url: getPageFrontUrl(context)
             }
         }
