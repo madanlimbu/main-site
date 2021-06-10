@@ -1,153 +1,29 @@
-import Head from 'next/head';
 import Posts, { PostsProps } from "../components/Posts";
-import { RoutesCollection } from "../lib/api/contentful/interface";
-import queryRoutes from "../lib/api/contentful/routes";
 import api from "../lib/api/client";
-import Navigation from "../components/Navigation";
-import { RouteProps } from "../components/Menu";
-import MenuTreeSideBar from "../components/MenuTreeSideBar";
-import {getGithubPageRoutes} from "../lib/api/github/utils";
-import Metadata, {MetadataProps} from "../components/Metadata";
-import {ServerSideProps} from "../lib/api/Interface";
+import {MetadataProps} from "../components/Metadata";
+import {DynamicPageParams, ServerSideProps} from "../lib/api/Interface";
+import PageWrapper from "../components/PageWrapper";
+import {getPageFrontUrl} from "../lib/utils/global";
 
 const POSTS_SIZE = 1;
 
 type IndexPageProps = {
-    // routes?: RoutesCollection;
-    githubRoutes: RouteProps;
     postsProps: PostsProps;
     metadata: MetadataProps;
 }
 
 function IndexPage(props: IndexPageProps) {
-    const { githubRoutes } = props;
-    const menuProps: RouteProps = {
-        title: 'title',
-        routes: [
-            {
-                "title": "madan",
-                "routes": [
-                    {
-                        "title": "Home",
-                        "path": "/"
-                    },
-                    {
-                        "title": "Web",
-                        "routes": [
-                            {
-                                "title": "Web Api",
-                                "path": "/learn/web-stuff/web-api"
-                            },
-                            {
-                                "title": "Cookie",
-                                "path": "/learn/web-stuff/cookie"
-                            },
-                            {
-                                "title": "OAuth 2.0",
-                                "path": "/random/oauth-2.0"
-                            }
-                        ]
-                    },
-                    {
-                        "title": "React",
-                        "path": "/learn/web-stuff/react/README",
-                        "routes": [
-                            {
-                                "title": "React Hooks",
-                                "path": "/learn/web-stuff/react/hooks"
-                            }
-                        ]
-                    },
-                    {
-                        "title": "Drupal",
-                        "routes": [
-                            {
-                                "title": "Drupal 8",
-                                "routes": [
-                                    {
-                                        "title": "Drupal 8 Composer scaffolding",
-                                        "path": "/learn/drupal/drupal-php-thangs"
-                                    },
-                                    {
-                                        "title": "Permissions",
-                                        "path": "/learn/drupal/drupal-8/permissions"
-                                    },
-                                    {
-                                        "title": "Data system",
-                                        "path": "/learn/drupal/drupal-8/type-of-data-storage"
-                                    }
-                                ]
-                            },
-                            {
-                                "title": "Drupal 7",
-                                "routes": [
-                                    {
-                                        "title": "Custom Field Widget",
-                                        "path": "/learn/drupal/drupal-7/custom-field-widget"
-                                    },
-                                    {
-                                        "title": "Custom Drush Command",
-                                        "path": "/learn/drupal/drupal-7/drush-command"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "title": "Python & Django",
-                        "routes": [
-                            {
-                                "title": "Intro to Pythonism",
-                                "path": "/learn/python-django/pythonism"
-                            },
-                            {
-                                "title": "Django",
-                                "routes": [
-                                    {
-                                        "title": "Django Overview",
-                                        "path": "/learn/python-django/untitled/overview"
-                                    },
-                                    {
-                                        "title": "Tools",
-                                        "path": "/learn/python-django/untitled/tools"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    };
-
     return (
-        <>
-            {/* <Head>
-                <title>Mainer</title>
-            </Head> */}
-
-            <Metadata {...props.metadata}/>
-            <Navigation />
-            {/*<MenuTreeSideBar {...githubRoutes} />*/}
-            <div className="content-wrapper">
-                <h1>A website containing personal collection of a developer adventure.</h1>
-                <Posts {...props.postsProps}/>
-            </div>
-            {/* {*/}
-            {/*routes*/}
-            {/*.routesCollection*/}
-            {/*.items*/}
-            {/*.find(menu => menu.name === 'Menus')*/}
-            {/*.routes*/}
-            {/*.routes*/}
-            {/*.map(route => <div className="main-menu" key={route.title} >{route.title}</div>)*/}
-            {/*}*/}
-        </>
+            <PageWrapper metadata={props.metadata} >
+                <>
+                    <h1>A website containing personal collection of a developer adventure.</h1>
+                    <Posts {...props.postsProps}/>
+                </>
+            </PageWrapper>
     );
 }
 
-export async function getServerSideProps(context): Promise<ServerSideProps<IndexPageProps>>  {
-    // const routes = (await queryRoutes({ preview: preview }) ?? {});
+export async function getServerSideProps(context: DynamicPageParams): Promise<ServerSideProps<IndexPageProps>>  {
     const postsProps: PostsProps = await api.getPosts({
         skip: 0,
         limit: POSTS_SIZE,
@@ -162,17 +38,13 @@ export async function getServerSideProps(context): Promise<ServerSideProps<Index
         };
     });
 
-    console.log(`Context`, context);
-
-    const githubRoutes = await getGithubPageRoutes();
     return {
         props: {
-            githubRoutes: githubRoutes,
             postsProps: postsProps,
             metadata: {
                 title: 'Madan Limbu',
                 description: "A website containing personal collection of a developer adventure.",
-                url: context.req.headers.referer
+                url: getPageFrontUrl(context)
             }
         }
     };

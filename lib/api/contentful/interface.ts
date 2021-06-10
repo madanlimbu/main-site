@@ -5,7 +5,7 @@ export type CollectionParams = {
     skip?: number;
     limit?: number;
     where?: string;
-    preview: boolean;
+    preview?: boolean;
 }
 
 export type ContentfulSucessfulResponse<T> = {

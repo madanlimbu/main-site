@@ -16,13 +16,20 @@ export const pageToGithubUrl = (pageName: string): string => {
     return `https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/${pageName}.md`;
 };
 
-export async function getGithubPage(path: string): Promise<string> {
-    getGithubPageRoutes();
+interface GithubPageProps {
+    html: string;
+    plain: string;
+}
+
+export async function getGithubPage(path: string): Promise<GithubPageProps> {
     const githubPageUrl = await fetch(pageToGithubUrl(path));
     const markdown = await githubPageUrl.text();
     showdown.setFlavor(MARKDOWN_TYPE);
     const showdownConverter = new showdown.Converter();
-    return showdownConverter.makeHtml(markdown);
+    return {
+        html: showdownConverter.makeHtml(markdown),
+        plain: markdown
+    }
 }
 
 /**

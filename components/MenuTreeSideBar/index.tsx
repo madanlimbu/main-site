@@ -74,8 +74,11 @@ export default function MenuTreeSideBar({ routes }: RouteProps): ReactElement {
     };
 
     return(
-        <ul className="tree">
-            <GenerateMenuTree routes={routes} branch={branch} leaf={leaf} />
-        </ul>
+        <>
+            <h1>Docs Listing - List of personal docs for specific tech topic.</h1>
+            <ul className="tree">
+                <GenerateMenuTree routes={routes} branch={branch} leaf={leaf} />
+            </ul>
+        </>
     )
 }

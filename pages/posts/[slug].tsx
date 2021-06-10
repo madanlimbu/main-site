@@ -2,43 +2,39 @@ import { PostContentType } from "../../lib/api/contentful/interface";
 import { DynamicPageParams, ServerSideProps } from "../../lib/api/Interface";
 import api from "../../lib/api/client";
 import PostsPage from "../../components/PostsPage";
-import Navigation from "../../components/Navigation";
+import {MetadataProps} from "../../components/Metadata";
+import PageWrapper from "../../components/PageWrapper";
+import {getPageFrontUrl} from "../../lib/utils/global";
 
 interface PostPageProps {
     post: PostContentType;
+    metadata: MetadataProps;
 }
 
-export default function Post({ post } : PostPageProps) {
-    console.log(`Post`, post);
-    console.log(`Post assets`, post.content.links.assets);
-    console.log(`Post entries`, post.content.links.entries);
-
+export default function Post({ post, metadata } : PostPageProps) {
     return (
-        <>
-            <Navigation />
-            <div className="content-wrapper">
-                <PostsPage {...post} />
-                {/*<article>*/}
-                {/*    <h1>{post.title}</h1>*/}
-                {/*    <div>{post.date}</div>*/}
-                {/*    {post.coverImage && <img src={post.coverImage.url} alt={post.coverImage.title} />}*/}
-                {/*    <RichText {...post.content.json}/>*/}
-                {/*</article>*/}
-            </div>
-        </>
+        <PageWrapper metadata={metadata}>
+            <PostsPage {...post} />
+        </PageWrapper>
     )
 }
 
 
-export async function getServerSideProps({ params, preview = false }: DynamicPageParams): Promise<ServerSideProps<PostPageProps>> {
-    const post = await api.getPosts({
-        where: `{ slug: "${params.slug}" }`,
+export async function getServerSideProps(context : DynamicPageParams): Promise<ServerSideProps<PostPageProps>> {
+    const postList = await api.getPosts({
+        where: `{ slug: "${context.params.slug}" }`,
         limit: 1,
-        preview
+        preview: false
     });
+    const post = postList.postCollection.items[0];
     return {
         props: {
-            post: post.postCollection.items[0]
+            post,
+            metadata: {
+                title: post.title,
+                description: post.excerpt,
+                url: getPageFrontUrl(context)
+            }
         }
     };
 }

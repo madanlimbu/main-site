@@ -1,7 +1,6 @@
 import api from "../../lib/api/contentful/client";
 
 export default async function contentful(req, res) {
-    console.log(`Contentful api`);
     const { service, args } = req.body;
 
     try {

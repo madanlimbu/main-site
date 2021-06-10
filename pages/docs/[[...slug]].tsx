@@ -1,49 +1,50 @@
-import Navigation from "../../components/Navigation";
-import { ServerSideProps } from "../../lib/api/Interface";
-import { GithubMarkdown, GithubMarkdownProps} from "../../components/GithubMarkdown";
+import {DynamicPageParams, ServerSideProps} from "../../lib/api/Interface";
+import { GithubMarkdown } from "../../components/GithubMarkdown";
 import {getGithubPage, getGithubPageRoutes} from "../../lib/api/github/utils";
 import {RouteProps} from "../../components/Menu";
 import MenuTreeSideBar from "../../components/MenuTreeSideBar";
+import PageWrapper from "../../components/PageWrapper";
+import {MetadataProps} from "../../components/Metadata";
+import {getPageFrontUrl, stripSpecialCharacters} from "../../lib/utils/global";
 
 interface DocsSingle {
     type: "single"
     body: string;
+    metadata: MetadataProps;
 }
 
 interface DocsListing {
     type: "listing";
     githubRoutes: RouteProps;
+    metadata: MetadataProps;
 }
 
 type DocsProps = DocsSingle | DocsListing;
 
 export default function Docs(docs : DocsProps) {
-    // const gitMarkdown: GithubMarkdownProps = {
-    //     markdown: docs.body
-    // };
-
     return (
-        <>
-            <Navigation/>
-            <div className="content-wrapper">
-                {docs.type == "single" &&
-                <GithubMarkdown {...{markdown: docs.body}}/>}
-                {docs.type == "listing" &&
-                <MenuTreeSideBar {...docs.githubRoutes} />
-                }
-            </div>
-        </>
+        <PageWrapper metadata={docs.metadata}>
+            <>
+                {docs.type == "single" && <GithubMarkdown {...{markdown: docs.body}}/>}
+                {docs.type == "listing" && <MenuTreeSideBar {...docs.githubRoutes} />}
+            </>
+        </PageWrapper>
     )
 }
 
-export async function getServerSideProps(context): Promise<ServerSideProps<DocsProps>> {
+export async function getServerSideProps(context: DynamicPageParams): Promise<ServerSideProps<DocsProps>> {
     if (context.params.slug) {
         const path = context.params.slug.join('/');
         const githubMarkdown = await getGithubPage(path);
         return {
             props: {
                 type: "single",
-                body: githubMarkdown
+                body: githubMarkdown.html,
+                metadata: {
+                    title: path.split('/').pop(),
+                    description: stripSpecialCharacters(githubMarkdown.plain).slice(0, 200),
+                    url: getPageFrontUrl(context)
+                }
             }
         };
     } else {
@@ -51,7 +52,12 @@ export async function getServerSideProps(context): Promise<ServerSideProps<DocsP
         return {
             props: {
                 type: "listing",
-                githubRoutes
+                githubRoutes,
+                metadata: {
+                    title: 'Docs Listing',
+                    description: 'List of personal docs for specific tech topic.',
+                    url: getPageFrontUrl(context)
+                }
             }
         };
     }

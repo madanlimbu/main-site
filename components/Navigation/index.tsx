@@ -1,4 +1,4 @@
-import {ReactElement, useEffect, useState} from "react";
+import {ReactElement} from "react";
 import { useRouter } from "next/router";
 import "./Navigation.scss";
 import {ThemeToggle} from "../ThemeToggle";

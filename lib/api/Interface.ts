@@ -1,3 +1,5 @@
+import {IncomingMessage} from "http";
+
 export interface Api {
     getPosts: <T, F>(q: T) => Promise<F>,
 }
@@ -12,10 +14,12 @@ export interface ServerSideProps<T> {
 }
 
 export interface DynamicPageParams {
+    req: IncomingMessage,
     params: {
-        slug: string;
+        slug: [string];
     };
     preview: boolean;
+    resolvedUrl: string;
 }
 
 export type RouteProps = {
