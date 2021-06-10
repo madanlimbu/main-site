@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Posts, { PostsProps } from "../components/Posts";
 import { RoutesCollection } from "../lib/api/contentful/interface";
 import queryRoutes from "../lib/api/contentful/routes";
@@ -6,6 +7,8 @@ import Navigation from "../components/Navigation";
 import { RouteProps } from "../components/Menu";
 import MenuTreeSideBar from "../components/MenuTreeSideBar";
 import {getGithubPageRoutes} from "../lib/api/github/utils";
+import Metadata, {MetadataProps} from "../components/Metadata";
+import {ServerSideProps} from "../lib/api/Interface";
 
 const POSTS_SIZE = 1;
 
@@ -13,6 +16,7 @@ type IndexPageProps = {
     // routes?: RoutesCollection;
     githubRoutes: RouteProps;
     postsProps: PostsProps;
+    metadata: MetadataProps;
 }
 
 function IndexPage(props: IndexPageProps) {
@@ -121,9 +125,12 @@ function IndexPage(props: IndexPageProps) {
             {/* <Head>
                 <title>Mainer</title>
             </Head> */}
+
+            <Metadata {...props.metadata}/>
             <Navigation />
             {/*<MenuTreeSideBar {...githubRoutes} />*/}
             <div className="content-wrapper">
+                <h1>A website containing personal collection of a developer adventure.</h1>
                 <Posts {...props.postsProps}/>
             </div>
             {/* {*/}
@@ -139,7 +146,7 @@ function IndexPage(props: IndexPageProps) {
     );
 }
 
-export async function getServerSideProps({ preview = false }) {
+export async function getServerSideProps(context): Promise<ServerSideProps<IndexPageProps>>  {
     // const routes = (await queryRoutes({ preview: preview }) ?? {});
     const postsProps: PostsProps = await api.getPosts({
         skip: 0,
@@ -155,11 +162,18 @@ export async function getServerSideProps({ preview = false }) {
         };
     });
 
+    console.log(`Context`, context);
+
     const githubRoutes = await getGithubPageRoutes();
     return {
         props: {
             githubRoutes: githubRoutes,
-            postsProps: postsProps
+            postsProps: postsProps,
+            metadata: {
+                title: 'Madan Limbu',
+                description: "A website containing personal collection of a developer adventure.",
+                url: context.req.headers.referer
+            }
         }
     };
 }
